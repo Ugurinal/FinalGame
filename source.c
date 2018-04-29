@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
 	myball.vely = 0;
 	myball.radius = 20;
 
-	void initfloors(floor floors[],int NUM_floor);
+	initfloors(floors, NUM_floor);
 
 	srand(time(NULL));
 
@@ -127,9 +127,9 @@ int main(int argc, char **argv) {
 			myball.x -= keys[left] * 10;
 			myball.x += keys[right] * 10;
 
-			void startfloors(floor floors[], int NUM_floor);
+			startfloors(floors, NUM_floor);
 
-			void updatefloors(floor floors[], int NUM_floor);
+			updatefloors(floors, NUM_floor);
 
 		}
 
@@ -146,7 +146,7 @@ int main(int argc, char **argv) {
 
 			al_draw_textf(font24, al_map_rgb(0, 255, 0), 50, 10, ALLEGRO_ALIGN_CENTER, "Score : %i", myball.score);
 			al_draw_circle(myball.x, myball.y, myball.radius, al_map_rgb(0, 191, 255), 1);
-			void drawfloors(floor floors[], int NUM_floor);
+			drawfloors(floors, NUM_floor);
 
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0)); // bufferı temizleyip arkadaki renkleri sıfırlıyor önceki hareketi ekranda kalmıyor.
@@ -171,6 +171,8 @@ void initfloors(floor floors[], int size) {
 		floors[i].speed = 1;
 		floors[i].boundx = 18;
 		floors[i].boundy = 18;
+
+		printf("%d", floors[i].x);
 	}
 }
 void drawfloors(floor floors[], int size) {
@@ -184,7 +186,7 @@ void drawfloors(floor floors[], int size) {
 void startfloors(floor floors[], int size) {
 	for (int i = 0; i <= NUM_floor; i++) {
 		if (!floors[i].live) {
-			if (rand() % 5 == 0) {
+			if (rand() % 500 == 0) {
 				floors[i].live = true;
 				floors[i].x = 100 + rand() % (height - 30);
 				floors[i].y = 0;
@@ -198,7 +200,7 @@ void updatefloors(floor floors[], int size) {
 	for (int i = 0; i <= NUM_floor; i++) {
 		if (floors[i].live) {
 
-			floors[i].y -= floors[i].speed;
+			floors[i].y += floors[i].speed;
 			if (floors[i].y > height) {
 				floors[i].live = false;
 			}
